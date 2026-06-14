@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Athena Matrix // Boot Sequence</title>
+    <style>
+        /* Midnight Base Configuration */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000000;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Matrix Rain Canvas Layer */
+        #matrixCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* HUD Overlay Layer */
+        .splash-container {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+        }
+
+        /* Emblem Animation Matrix */
+        .logo-emblem {
+            width: 280px;
+            height: 280px;
+            object-fit: contain;
+            opacity: 0;
+            transform: scale(0.92);
+            filter: drop-shadow(0 0 25px rgba(220, 20, 60, 0.6));
+            animation: emblemInitialize 3.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            animation-delay: 1s;
+        }
+
+        /* Tactical Quote Framework */
+        .strategic-manifesto {
+            margin-top: 40px;
+            color: #ffffff;
+            font-size: 1.15rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0;
+            width: 90%;
+            line-height: 1.6;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(220, 20, 60, 0.8);
+            animation: textInitialize 2.5s ease-out forwards;
+            animation-delay: 3s;
+        }
+
+        /* Operational Core Animations */
+        @keyframes emblemInitialize {
+            0% {
+                opacity: 0;
+                transform: scale(0.92);
+                filter: drop-shadow(0 0 5px rgba(220, 20, 60, 0.2)) brightness(0.5);
+            }
+            50% {
+                opacity: 0.5;
+                filter: drop-shadow(0 0 30px rgba(220, 20, 60, 0.8)) brightness(1.2);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+                filter: drop-shadow(0 0 20px rgba(220, 20, 60, 0.5)) brightness(1);
+            }
+        }
+
+        @keyframes textInitialize {
+            0% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Layer 1: Digital Stream -->
+    <canvas id="matrixCanvas"></canvas>
+
+    <!-- Layer 2: Core HUD Interlock -->
+    <div class="splash-container">
+        <!-- Direct hook to your transparent 512px asset -->
+        <img src="assets/athena-matrix-512.png" alt="Athena Matrix Core" class="logo-emblem" onerror="this.src='public/logo512.png'">
+        <div class="strategic-manifesto">
+            "In strategic warfare, the victor wins before the battle is ever fought."
+        </div>
+    </div>
+
+    <!-- Script Engine: Crimson Cascader -->
+    <script>
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Force Full Display Boundaries
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Katakana, Alpha, and Metadata Hex Characters
+        const charset = "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ1234567890ABCDEFINTERLOCKCADNCIC";
+        const chars = charset.split('');
+
+        const fontSize = 14;
+        let columns = canvas.width / fontSize;
+        let drops = Array(Math.floor(columns)).fill(1);
+
+        // Render Matrix Loop
+        function drawMatrix() {
+            // High-retention trail fade for technical rendering depth
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.06)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Crimson Config: #DC143C Base with metadata variance
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = chars[Math.floor(Math.random() * chars.length)];
+                
+                // Randomly alternate character brightness to mimic active data packets
+                if (Math.random() > 0.98) {
+                    ctx.fillStyle = '#ffffff'; // High-intensity flash
+                } else if (Math.random() > 0.85) {
+                    ctx.fillStyle = '#ff6b8b'; // Mid-tone glow
+                } else {
+                    ctx.fillStyle = '#DC143C'; // Standard Crimson
+                }
+
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                // Reset stream sequence to zero out synchronized repetition patterns
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+
+        // Lock Engine to 30 FPS for optimal rendering efficiency and aesthetic pacing
+        setInterval(drawMatrix, 33);
+    </script>
+</body>
+</html>
