@@ -155,6 +155,7 @@
             letter-spacing: 1px;
             cursor: pointer;
             transition: background 0.2s;
+            margin-top: auto;
         }
 
         .submit-btn:hover {
@@ -176,10 +177,12 @@
 </head>
 <body>
 
+    <!-- Tactical Rail -->
     <div class="control-rail">
         <div class="rail-indicator">DATA_CAPTURE_NODE</div>
     </div>
 
+    <!-- Core Form Workspace -->
     <div class="workspace">
         
         <div class="section-header">
@@ -189,6 +192,7 @@
 
         <div class="form-grid">
             
+            <!-- Block 1: Master Case Descriptors -->
             <div class="form-group">
                 <div class="group-title">1. Global Case Parameters</div>
                 
@@ -203,8 +207,11 @@
 
                 <label for="hearingDate">Target Hearing Datetime</label>
                 <input type="text" id="hearingDate" placeholder="YYYY-MM-DDTHH:MM:SS (e.g., 2026-06-18T09:00:00)">
+
+                <button type="button" class="submit-btn" style="background-color: #1e293b;" onclick="AthenaEngine.commitParameters()">Lock Case Parameters</button>
             </div>
 
+            <!-- Block 2: Interlock Engine Linker -->
             <div class="form-group">
                 <div class="group-title">2. Matrix Structural Interlock Input</div>
                 
@@ -228,11 +235,12 @@
                 <label for="receiptText">Unassailable Database Text Log</label>
                 <textarea id="receiptText" placeholder="Paste the exact system entry text that verifies the contradiction..."></textarea>
 
-                <button type="button" class="submit-btn" onclick="CaptureEngine.commitInterlock()">Commit Interlock to Matrix</button>
+                <button type="button" class="submit-btn" onclick="AthenaEngine.commitInterlock()">Commit Interlock to Matrix</button>
             </div>
 
         </div>
 
+        <!-- Terminal Status Monitoring Block -->
         <div class="group-title">System Ingestion Output Stream</div>
         <div class="terminal-preview" id="termStream">
             [SYS_LOG] Athena Matrix capture module initialized. Awaiting pipeline ingestion data...
@@ -240,33 +248,7 @@
 
     </div>
 
-    <script>
-        // Internal Ingestion Engine Logic
-        const CaptureEngine = {
-            commitInterlock: function() {
-                const stream = document.getElementById("termStream");
-                const mSec = document.getElementById("motionSec").value;
-                const eTag = document.getElementById("exhibitTag").value;
-
-                if (!mSec || !eTag) {
-                    stream.innerHTML += `<br><span style="color:#dc143c;">[ERROR] Commit rejected. Missing absolute structural keys.</span>`;
-                    return;
-                }
-
-                // Simulate programmatic streaming pipeline
-                stream.innerHTML += `<br><span style="color:#ffffff;">[INGEST] Verifying relational dependencies for ${mSec}...</span>`;
-                stream.innerHTML += `<br>[LOCKED] Linked ${mSec} directly to data trace ${eTag}. Storage array synchronized.`;
-                
-                // Clear structural input rows for next packet ingestion
-                document.getElementById("motionSec").value = "";
-                document.getElementById("motionText").value = "";
-                document.getElementById("exhibitTag").value = "";
-                document.getElementById("receiptSource").value = "";
-                document.getElementById("receiptText").value = "";
-                
-                stream.scrollTop = stream.scrollHeight;
-            }
-        };
-    </script>
+    <!-- The Central Nervous System Link -->
+    <script src="script.js"></script>
 </body>
 </html>
