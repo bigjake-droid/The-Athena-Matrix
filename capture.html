@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Athena Matrix // Data Capture</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            background-color: #050505;
+            font-family: 'Consolas', 'Courier New', monospace;
+            color: #e2e8f0;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* Left Side Static Control Indicator */
+        .control-rail {
+            width: 80px;
+            height: 100%;
+            border-right: 2px solid #991b1b;
+            background: linear-gradient(180deg, #110002 0%, #000000 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+        }
+
+        .rail-indicator {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: #dc143c;
+            font-size: 0.85rem;
+            font-weight: bold;
+            transform: rotate(180deg);
+            margin-top: 30px;
+        }
+
+        /* Main Entry Subsystem */
+        .workspace {
+            flex: 1;
+            height: 100%;
+            padding: 30px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .section-header {
+            border-bottom: 2px solid #dc143c;
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #ffffff;
+        }
+
+        .nav-btn {
+            background-color: transparent;
+            border: 1px solid #dc143c;
+            color: #dc143c;
+            padding: 6px 14px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn:hover {
+            background-color: #dc143c;
+            color: #ffffff;
+            box-shadow: 0 0 10px rgba(220, 20, 60, 0.4);
+        }
+
+        /* Form Layout Grid */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            background-color: #0c0c0e;
+            border: 1px solid #1e293b;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .group-title {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: #dc143c;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"], textarea, select {
+            background-color: #111114;
+            border: 1px solid #27272a;
+            color: #ffffff;
+            padding: 10px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+            outline: none;
+        }
+
+        input[type="text"]:focus, textarea:focus, select:focus {
+            border: 1px solid #dc143c;
+            box-shadow: 0 0 5px rgba(220, 20, 60, 0.2);
+        }
+
+        textarea {
+            resize: none;
+            height: 80px;
+        }
+
+        .submit-btn {
+            background-color: #991b1b;
+            color: #ffffff;
+            border: none;
+            padding: 12px;
+            font-family: 'Consolas', monospace;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .submit-btn:hover {
+            background-color: #dc143c;
+            box-shadow: 0 0 15px rgba(220, 20, 60, 0.3);
+        }
+
+        /* Log Preview Terminal */
+        .terminal-preview {
+            background-color: #000000;
+            border: 1px dashed #dc143c;
+            padding: 15px;
+            font-size: 0.8rem;
+            color: #4ade80;
+            height: 150px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="control-rail">
+        <div class="rail-indicator">DATA_CAPTURE_NODE</div>
+    </div>
+
+    <div class="workspace">
+        
+        <div class="section-header">
+            <h2>Ingestion & Interlock Console</h2>
+            <a href="dashboard.html" class="nav-btn">← Return To Main Grid</a>
+        </div>
+
+        <div class="form-grid">
+            
+            <div class="form-group">
+                <div class="group-title">1. Global Case Parameters</div>
+                
+                <label for="caseNum">Case Identifier / Docket Number</label>
+                <input type="text" id="caseNum" placeholder="e.g., 25CR1298">
+
+                <label for="jurisdiction">Jurisdiction / Venue</label>
+                <input type="text" id="jurisdiction" placeholder="e.g., District Court, Larimer County, CO">
+
+                <label for="division">Court Division</label>
+                <input type="text" id="division" placeholder="e.g., 4A">
+
+                <label for="hearingDate">Target Hearing Datetime</label>
+                <input type="text" id="hearingDate" placeholder="YYYY-MM-DDTHH:MM:SS (e.g., 2026-06-18T09:00:00)">
+            </div>
+
+            <div class="form-group">
+                <div class="group-title">2. Matrix Structural Interlock Input</div>
+                
+                <label for="motionSec">Legal Ground Title / Motion Section</label>
+                <input type="text" id="motionSec" placeholder="e.g., Sec. I: Procedural Nullity">
+
+                <label for="motionText">Substantive Constitutional Ground</label>
+                <textarea id="motionText" placeholder="Define the baseline constitutional or structural claim..."></textarea>
+
+                <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 10px;">
+                    <div>
+                        <label for="exhibitTag">Exhibit Key</label>
+                        <input type="text" id="exhibitTag" placeholder="e.g., EXHIBIT [A]">
+                    </div>
+                    <div>
+                        <label for="receiptSource">Digital Receipt Source</label>
+                        <input type="text" id="receiptSource" placeholder="e.g., NCIC Inquiry Logs / CAD Metadata">
+                    </div>
+                </div>
+
+                <label for="receiptText">Unassailable Database Text Log</label>
+                <textarea id="receiptText" placeholder="Paste the exact system entry text that verifies the contradiction..."></textarea>
+
+                <button type="button" class="submit-btn" onclick="CaptureEngine.commitInterlock()">Commit Interlock to Matrix</button>
+            </div>
+
+        </div>
+
+        <div class="group-title">System Ingestion Output Stream</div>
+        <div class="terminal-preview" id="termStream">
+            [SYS_LOG] Athena Matrix capture module initialized. Awaiting pipeline ingestion data...
+        </div>
+
+    </div>
+
+    <script>
+        // Internal Ingestion Engine Logic
+        const CaptureEngine = {
+            commitInterlock: function() {
+                const stream = document.getElementById("termStream");
+                const mSec = document.getElementById("motionSec").value;
+                const eTag = document.getElementById("exhibitTag").value;
+
+                if (!mSec || !eTag) {
+                    stream.innerHTML += `<br><span style="color:#dc143c;">[ERROR] Commit rejected. Missing absolute structural keys.</span>`;
+                    return;
+                }
+
+                // Simulate programmatic streaming pipeline
+                stream.innerHTML += `<br><span style="color:#ffffff;">[INGEST] Verifying relational dependencies for ${mSec}...</span>`;
+                stream.innerHTML += `<br>[LOCKED] Linked ${mSec} directly to data trace ${eTag}. Storage array synchronized.`;
+                
+                // Clear structural input rows for next packet ingestion
+                document.getElementById("motionSec").value = "";
+                document.getElementById("motionText").value = "";
+                document.getElementById("exhibitTag").value = "";
+                document.getElementById("receiptSource").value = "";
+                document.getElementById("receiptText").value = "";
+                
+                stream.scrollTop = stream.scrollHeight;
+            }
+        };
+    </script>
+</body>
+</html>
