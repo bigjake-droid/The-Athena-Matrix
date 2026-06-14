@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Athena Matrix // Command Console</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            background-color: #050505;
+            font-family: 'Consolas', 'Courier New', monospace;
+            color: #e2e8f0;
+            overflow: hidden;
+            display: flex;
+        }
+
+        /* Left Side: Stream Data Column */
+        .sidebar-stream {
+            width: 120px;
+            height: 100%;
+            border-right: 2px solid #991b1b;
+            position: relative;
+            background-color: #000000;
+        }
+
+        #sidebarCanvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Main Console Layout */
+        .main-console {
+            flex: 1;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        /* Console Header Block */
+        .console-header {
+            border: 1px solid #dc143c;
+            background: linear-gradient(90deg, #1a0508 0%, #000000 100%);
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            box-shadow: 0 0 15px rgba(220, 20, 60, 0.15);
+        }
+
+        .sys-title h1 {
+            font-size: 1.4rem;
+            color: #ffffff;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .sys-title span {
+            color: #dc143c;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .sys-status {
+            text-align: right;
+            font-size: 0.85rem;
+        }
+
+        .status-locked {
+            color: #dc143c;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+
+        /* Interactive Interlock Grid */
+        .grid-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            flex: 1;
+        }
+
+        .panel {
+            background-color: #0c0c0e;
+            border: 1px solid #1e293b;
+            border-left: 4px solid #334155;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel-active {
+            border-left: 4px solid #dc143c;
+            box-shadow: -5px 0 10px rgba(220, 20, 60, 0.05);
+        }
+
+        .panel-title {
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #94a3b8;
+            margin-bottom: 15px;
+            border-bottom: 1px dashed #1e293b;
+            padding-bottom: 5px;
+        }
+
+        /* Tactical Data Rows */
+        .interlock-row {
+            background-color: #111114;
+            border: 1px solid #1e293b;
+            margin-bottom: 10px;
+            padding: 12px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .data-segment {
+            font-size: 0.85rem;
+        }
+
+        .segment-label {
+            color: #dc143c;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            margin-bottom: 4px;
+        }
+
+        /* Precedent Sniper Cards */
+        .sniper-card {
+            background-color: #161112;
+            border: 1px solid #3f1619;
+            padding: 12px;
+            margin-bottom: 10px;
+        }
+
+        .sniper-citation {
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 0.85rem;
+            margin-bottom: 5px;
+        }
+
+        .sniper-rule {
+            font-size: 0.8rem;
+            color: #cbd5e1;
+            line-height: 1.4;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Tactical Stream Margin -->
+    <div class="sidebar-stream">
+        <canvas id="sidebarCanvas"></canvas>
+    </div>
+
+    <!-- Main Operational Mainframe -->
+    <div class="main-console">
+        
+        <!-- Header Node -->
+        <div class="console-header">
+            <div class="sys-title">
+                <h1>The Athena Matrix</h1>
+                <span>CASEFORGE ENGINE INTEGRATION // PRO SE DISCOVERY CONSOLE</span>
+            </div>
+            <div class="sys-status">
+                <div>CORE STATUS: <span class="status-locked">DYNAMIC_LOCKED</span></div>
+                <div style="color: #64748b; font-size: 0.75rem; margin-top: 3px;">TARGET HEARING: T-MINUS 4 DAYS</div>
+            </div>
+        </div>
+
+        <!-- Working Data Grid -->
+        <div class="grid-container">
+            
+            <!-- Left Panel: Matrix Interlock Engine -->
+            <div class="panel panel-active">
+                <div class="panel-title">Active Verification Matrix</div>
+                
+                <div class="interlock-row">
+                    <div class="data-segment">
+                        <div class="segment-label">Legal Dismissal Ground (Omnibus)</div>
+                        <strong>Sec. I: Procedural Nullity</strong><br>
+                        State failed to file a timely P.C. affidavit on the record. Warrantless arrest is legally void.
+                    </div>
+                    <div class="data-segment" style="border-left: 1px dashed #27272a; padding-left: 15px;">
+                        <div class="segment-label">Unassailable Digital Receipt (Supplemental)</div>
+                        <span style="color: #ffffff; background-color: #27272a; padding: 2px 5px; font-size: 0.7rem; font-weight: bold;">EXHIBIT [C]</span><br>
+                        NCIC Query Logs confirm NO stolen vehicle database entry existed at exact time of arrest.
+                    </div>
+                </div>
+
+                <div class="interlock-row">
+                    <div class="data-segment">
+                        <div class="segment-label">Legal Dismissal Ground (Omnibus)</div>
+                        <strong>Sec. II/III: Color of Law Collusion</strong><br>
+                        Police used criminal processing mechanisms to execute a private commercial asset repossession.
+                    </div>
+                    <div class="data-segment" style="border-left: 1px dashed #27272a; padding-left: 15px;">
+                        <div class="segment-label">Unassailable Digital Receipt (Supplemental)</div>
+                        <span style="color: #ffffff; background-color: #27272a; padding: 2px 5px; font-size: 0.7rem; font-weight: bold;">EXHIBIT [A]</span><br>
+                        JPD CAD Logs prove call run returned low-priority civil "DOR/RR" status code, not a felony hit.
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Panel: Case Law Sniper HUD -->
+            <div class="panel">
+                <div class="panel-title">Sniper Precedent Logs</div>
+                
+                <div class="sniper-card">
+                    <div class="sniper-citation">People v. Quintano (Colo. 2005)</div>
+                    <div class="sniper-rule">Dismantles broad "course of conduct" windows. State must pin down specific transformation dates if a contract exists.</div>
+                </div>
+
+                <div class="sniper-card">
+                    <div class="sniper-title" style="color: #dc143c; font-size: 0.75rem; font-weight: bold; margin-bottom: 4px;">PROCEDURAL SQUEEZE ALARM</div>
+                    <div class="sniper-citation" style="color: #ff6b8b;">DA RESPONSE DEFAULT</div>
+                    <div class="sniper-rule">Court deadline was June 8, 2026. Silence equals procedural confession. Record stands uncontradicted.</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Script Engine: Margin Stream Separator -->
+    <script>
+        const canvas = document.getElementById('sidebarCanvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = 120;
+        canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            canvas.height = window.innerHeight;
+        });
+
+        const charset = "0123456789ABCDEFINTERLOCKCADNCIC";
+        const chars = charset.split('');
+        const fontSize = 12;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
+
+        function drawSidebar() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = chars[Math.floor(Math.random() * chars.length)];
+                
+                if (Math.random() > 0.98) {
+                    ctx.fillStyle = '#ffffff';
+                } else {
+                    ctx.fillStyle = '#991b1b'; // Darker background margin rain
+                }
+
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.95) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+        setInterval(drawSidebar, 40);
+    </script>
+</body>
+</html>
